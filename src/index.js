@@ -5,12 +5,23 @@
     .then((response) => response.json()) // converts the fetched response into JSON format
     .then(ramen => { // processes the fetched data
       const imageOfRamen = document.getElementById("ramen-menu"); // "connects" the image pulled into the HTML id="ramen-menu"
-      ramen.forEach(ramen => { // loop through each ramen object in the database ("for each object, take image and name")
+      const firstRamen = ramen[0];
+
+      const ramenImage = document.getElementById("detail-image");
+      ramenImage.src = firstRamen.image;
+
+      const ramenName = document.getElementById("name");
+      ramenName.textContent = firstRamen.name;
+
+      const ramenRestaurant = document.getElementById("restaurant");
+      ramenRestaurant.textContent = firstRamen.restaurant;
+
+      ramen.slice(1).forEach(ramenItem => { // loop through each ramen object in the database ("for each object, take image and name")
         const img = document.createElement('img'); // create an image element for each ramen image
-        img.src = ramen.image; // pulls the image src url from db.json (key: image)
-        img.alt = ramen.name; // pulls the image name from db.json (key: name)
+        img.src = ramenItem.image; // pulls the image src url from db.json (key: image)
+        img.alt = ramenItem.name; // pulls the image name from db.json (key: name)
         img.addEventListener('click', () => {
-          handleClick(ramen);
+          handleClick(ramenItem);
         })
         imageOfRamen.appendChild(img); // appends the imageOfRamen to HTML 
         }); 
